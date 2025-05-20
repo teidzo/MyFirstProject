@@ -1,5 +1,5 @@
 import pygame
-from ConstantsinGame import *
+from .ConstantsinGame import *
 
 
 class UI:
@@ -10,4 +10,32 @@ class UI:
         self.hover.color = hover_color
         self.is_hovered = False
         self.font = pygame.font.SysFont('Arial', 30)
+
+
+    def draw(self, surface):
+        color = self.hover_color if self.is_hovered else self.color
+        pygame.draw.rect(surface, color, self.rect, 2, border_radius=10)
+        pygame.draw.rect(surface, Black, self.rect, 2, border_radius=10)
+
+        text_surface = self.font.render(self.text, True, Black)
+        text_rect = text_surface.get_rect(center=self.rect.center)
+        surface.blit(text_surface, text_rect)
+
+
+    def check_hover(self, pos):
+        self.is_hovered = self.rect.collidepoint(pos)
+
+
+    def is_clicked(self, pos, event):
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            return self.rect.collidepoint(pos)
+        return False
+
+
+
+
+
+
+
+
 
